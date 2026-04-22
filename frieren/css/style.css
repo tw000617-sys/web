@@ -1,0 +1,319 @@
+@charset "utf-8";
+
+/* 전역 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: top;
+}
+
+button {
+    cursor: pointer;
+    border: 0;
+}
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    z-index: 999;
+    justify-content: space-between;
+
+    background: rgba(255, 255, 255, 0.03);
+    background-image: linear-gradient(130deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.08) 35%,
+            rgba(255, 255, 255, 0.02) 100%);
+    background-blend-mode: overlay;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+        0 12px 30px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+    position: relative;
+}
+
+
+.nav-logo img {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+.nav-links {
+    display: flex;
+    gap: 60px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+
+
+body {
+
+    background-image: radial-gradient(circle at center, rgba(115, 185, 135, 0.15)0%, transparent 70%),
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)),
+        url('../assets/imges/frierenplace2.png');
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* 컨테이너 레이아웃 */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    /* align-items: center; */
+
+    justify-content: space-between;
+
+    padding: 100px 50px 0;
+}
+
+
+.char-list {
+    backdrop-filter: blur(3px);
+    /* 뒤 배경 흐리게 */
+    -webkit-backdrop-filter: blur(3px);
+    border-radius: 70px;
+    /* 모서리 둥글게 */
+    padding: 10px;
+    /* 내부 여백 */
+}
+
+
+.char-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.char-item {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        0 12px 20px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+}
+
+.char-item:hover {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.22));
+    box-shadow:
+        0 18px 28px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.char-item.active {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow:
+        0 18px 28px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+        0 0 20px rgba(115, 185, 135, 0.16);
+}
+
+
+
+
+.char-img {
+    max-width: 100%;
+    height: 70vh;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: -60px;
+
+
+  /* [유지] 기존 그림자 효과 (여기에 글로우를 살짝 섞어도 좋습니다) */
+    filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.3));
+
+    /* [추가/수정] 애니메이션 핵심 속성 */
+    /* transition에 opacity, transform, filter를 추가합니다. */
+    transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease; 
+    
+    /* 기본 상태 설정 */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 글자 개별 스타일 */
+.char-fade {
+    opacity: 0;
+    display: inline-block; /* 위치 이동 효과를 위해 필요 */
+    transform: translateY(5px); /* 아래에서 위로 살짝 올라오게 */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    white-space: pre; /* 공백 유지를 위해 필수 */
+}
+
+/* 글자가 나타날 때의 상태 */
+.char-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-out {
+    opacity: 0;
+    transform: translateY(20px);
+  filter: blur(15px) drop-shadow(0px 10px 15px rgba(0, 0, 0, 0)); /
+}
+
+.char-img:hover {
+
+    transform: scale(1.01) translateY(-5px);
+
+
+    filter: drop-shadow(0px 25px 20px rgba(83, 82, 82, 0.4));
+}
+
+
+
+ /* 캐릭터 소개 */
+#char-story {
+    display: block;
+    width: 100%;   /* 텍스트가 길어져도 높이가 변하지 않게 고정 */
+    position: relative;
+    min-height: 4.5em;
+    word-break: keep-all;
+    line-height: 1.8; /* 행간을 넓혀 읽기 편하게 */
+    color: rgba(255, 255, 255, 0.85); /* 살짝 투명도를 주어 배경과 조화 */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 글자 뒤에 미세한 그림자 */
+}
+#char-name {
+    font-size: 2rem;
+    letter-spacing: 0.1em; /* 자간 넓히기 */
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#char-name::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255,255,255,0,5),transparent);
+}
+/* 타이핑 중인 느낌을 주는 커서 효과 (선택 사항) */
+#char-story::after {
+    /* content: '|'; */
+    animation: blink 0.8s infinite;
+    margin-left: 5px;
+    color: #73b987; /* 프리렌 테마색 */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* 정보 패널 */
+.info-panel {
+    position: relative;
+}
+
+.info-panel {
+    top: -100px;
+}
+
+.char-info {
+    width: 400px;
+    min-height: 150px;
+    word-break: keep-all;
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03); /* 아주 미세한 밝은 배경 */
+    backdrop-filter: blur(5px);
+    border-radius: 4px 20px 4px 20px; /* 비대칭 곡선으로 세련된 느낌 */
+    border-left: 3px solid rgba(115, 185, 135, 0.6); /* 프리렌 테마색 포인트 선 */
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
+}
+
+
+
+.music-player {
+    position: relative;
+    right: 30px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 버튼 스타일: 반투명 및 블러 효과 */
+.control-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 30%;
+
+    /* 투명도와 흐림 효과 */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* 테두리 및 그림자 */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* 호버 효과 */
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* 클릭 시 효과 */
+.control-btn:active {
+    transform: scale(0.95);
+}
